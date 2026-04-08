@@ -16,6 +16,7 @@ let startTime = 0;
 elapsedTime = 0;
 var leaderboardArray = [];
 var times = [];
+start = true;
 
 function updateTimer() {
     now = new Date().getTime();
@@ -25,7 +26,13 @@ function updateTimer() {
 
 
 document.getElementById("playBtn").addEventListener("click", function() {
-    document.getElementById("msg").textContent = "Guess the number!";
+    if (start == true) {
+        document.getElementById("msg").textContent = "Hi, " + playerName + "! Guess the number!" + ".";
+    }
+    else {
+        document.getElementById("msg").textContent = "Guess another one, " + playerName + "!";
+    }
+    start = false;
     document.getElementById("playBtn").disabled = true;
     document.getElementById("guessBtn").disabled = false;
     document.getElementById("giveUpBtn").disabled = false;
