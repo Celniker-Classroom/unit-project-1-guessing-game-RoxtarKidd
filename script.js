@@ -10,6 +10,20 @@ var wins = null;
 var score = 0;
 var scoreArray = [];
 var avg = 0;
+let running = false
+let now = new Date();
+let startTime = 0;
+elapsedTime = 0;
+var leaderboardArray = [];
+var times = [];
+
+function updateTimer() {
+    now = new Date().getTime();
+    elapsedTime = (now - startTime) / 1000;  // convert ms to seconds
+    document.getElementById("myTimer").textContent = elapsedTime.toFixed(2);
+}
+
+
 document.getElementById("playBtn").addEventListener("click", function() {
     document.getElementById("msg").textContent = "Guess the number!";
     document.getElementById("playBtn").disabled = true;
@@ -20,9 +34,14 @@ document.getElementById("playBtn").addEventListener("click", function() {
 
     difficulty = document.querySelector('input[name="level"]:checked').value;
     range = parseInt(difficulty);
-    answer = Math.floor(Math.random() * range) + 1;;
-})
+    answer = Math.floor(Math.random() * range) + 1;
 
+    startTime = new Date().getTime();
+    elapsedTime = 0;
+    document.getElementById("myTimer").textContent = "0.00";
+    running = true;
+    intervalId = setInterval(updateTimer, 10);
+})
 
 document.getElementById("guessBtn").addEventListener("click", function() {
     numberOfGuesses++;
@@ -55,12 +74,20 @@ document.getElementById("guessBtn").addEventListener("click", function() {
         score = numberOfGuesses;
         wins++;
         scoreArray.push(score);
+        leaderboardArray.push(numberOfGuesses);
+        let sorted = leaderboardArray.sort((a, b) => a - b);
+        document.getElementById("leader1").textContent = sorted[0] || 100;
+        document.getElementById("leader2").textContent = sorted[1] || 100;
+        document.getElementById("leader3").textContent = sorted[2] || 100;
         avg = scoreArray.reduce((a, b) => a + b, 0) / scoreArray.length;
         document.getElementById("wins").textContent = "Total Wins: " + wins;
         document.getElementById("playBtn").disabled = false;
         document.getElementById("guessBtn").disabled = true;
         document.getElementById("giveUpBtn").disabled = true;
         document.getElementById("avgScore").textContent = "Average Guesses: " + avg.toFixed(2);
+        // Stop the timer
+        clearInterval(intervalId);
+        running = false;
     }
 })
 
@@ -73,4 +100,16 @@ document.getElementById("giveUpBtn").addEventListener("click", function() {
     scoreArray.push(score);
     avg = scoreArray.reduce((a, b) => a + b, 0) / scoreArray.length;
     document.getElementById("avgScore").textContent = "Average Guesses: " + avg.toFixed(2);
+    // Stop the timer
+    clearInterval(intervalId);
+    running = false;
 });
+
+
+
+
+
+
+
+
+
