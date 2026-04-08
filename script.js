@@ -6,22 +6,31 @@ var answer = null;
 const tempArray = ["cold", "warm", "hot"];
 var temp = null;
 var numberOfGuesses = 0;
-var wins = null;
+var wins = 0;
 var score = 0;
 var scoreArray = [];
 var avg = 0;
-let running = false
-let now = new Date();
+let running = false;
 let startTime = 0;
-elapsedTime = 0;
+let intervalId = null;
+let now = new Date();
+let day = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+let monthName = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+let dayName = day[now.getDay()];
+let month = monthName[now.getMonth()];
+let dayInMonth = now.getDate()
+let year = now.getFullYear()
+let oclock = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+let elapsedTime = 0;
 var leaderboardArray = [];
 var times = [];
 start = true;
 
+document.getElementById("date").textContent = "Today is " + dayName + ", " + month + " " + dayInMonth + ", " + year + ". The time is " + oclock + ".";
+
 function updateTimer() {
     now = new Date().getTime();
     elapsedTime = (now - startTime) / 1000;  // convert ms to seconds
-    document.getElementById("myTimer").textContent = elapsedTime.toFixed(2);
 }
 
 
@@ -32,7 +41,9 @@ document.getElementById("playBtn").addEventListener("click", function() {
     else {
         document.getElementById("msg").textContent = "Guess another one, " + playerName + "!";
     }
+
     start = false;
+
     document.getElementById("playBtn").disabled = true;
     document.getElementById("guessBtn").disabled = false;
     document.getElementById("giveUpBtn").disabled = false;
@@ -45,7 +56,7 @@ document.getElementById("playBtn").addEventListener("click", function() {
 
     startTime = new Date().getTime();
     elapsedTime = 0;
-    document.getElementById("myTimer").textContent = "0.00";
+    document.getElementById("fastest").textContent = "Fastest Game: 0.00 seconds";
     running = true;
     intervalId = setInterval(updateTimer, 10);
 })
@@ -81,20 +92,24 @@ document.getElementById("guessBtn").addEventListener("click", function() {
         score = numberOfGuesses;
         wins++;
         scoreArray.push(score);
-        leaderboardArray.push(numberOfGuesses);
+        leaderboardArray.push(score);
         let sorted = leaderboardArray.sort((a, b) => a - b);
         document.getElementById("leader1").textContent = sorted[0] || 100;
         document.getElementById("leader2").textContent = sorted[1] || 100;
         document.getElementById("leader3").textContent = sorted[2] || 100;
-        avg = scoreArray.reduce((a, b) => a + b, 0) / scoreArray.length;
         document.getElementById("wins").textContent = "Total Wins: " + wins;
         document.getElementById("playBtn").disabled = false;
         document.getElementById("guessBtn").disabled = true;
         document.getElementById("giveUpBtn").disabled = true;
         document.getElementById("avgScore").textContent = "Average Guesses: " + avg.toFixed(2);
-        // Stop the timer
         clearInterval(intervalId);
         running = false;
+        elapsedTime = (new Date().getTime() - startTime) / 1000;
+        times.push(elapsedTime);
+        const sortedTime = [...times].sort((a, b) => a - b);
+        const avgTime = times.reduce((a, b) => a + b, 0) / times.length;
+        document.getElementById("avgTime").textContent = "Average Time: " + avgTime.toFixed(2) + " seconds";
+        document.getElementById("fastest").textContent = "Fastest Game: " + sortedTime[0].toFixed(2) + " seconds";
     }
 })
 
@@ -110,6 +125,9 @@ document.getElementById("giveUpBtn").addEventListener("click", function() {
     // Stop the timer
     clearInterval(intervalId);
     running = false;
+    times.push(elapsedTime);
+    const sortedTime = [...times].sort((a, b) => a - b);
+    document.getElementById("fastest").textContent = "Fastest Game: " + sortedTime[0].toFixed(2) + " seconds";
 });
 
 
