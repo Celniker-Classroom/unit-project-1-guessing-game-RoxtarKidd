@@ -18,6 +18,7 @@ function updateDateTime() {
     document.getElementById("date").textContent = dayName + ", " + month + " " + dayInMonth + ", " + year + " " + oclock;
 }
 
+updateDateTime();
 setInterval(updateDateTime, 1000);
 
 var playerName = prompt("What is your name?");
@@ -140,6 +141,7 @@ document.getElementById("giveUpBtn").addEventListener("click", function() {
     
     score = range;
     scoreArray.push(score);
+    leaderboardArray.push(score);
 
     sorted = leaderboardArray.sort((a, b) => a - b);
     document.getElementById("leader1").textContent = sorted[0] || 100;
