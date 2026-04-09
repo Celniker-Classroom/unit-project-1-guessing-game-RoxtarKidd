@@ -23,6 +23,7 @@ setInterval(updateDateTime, 1000);
 
 var playerName = prompt("What is your name?");
 playerName = playerName.charAt(0).toUpperCase() + playerName.slice(1).toLowerCase();
+document.getElementById("msg").textContent = "Welcome, " + playerName + "! Please select a difficulty level and click 'Play' to start the game.";
 var difficulty = null;
 var range = null;
 var answer = null;
@@ -52,14 +53,7 @@ function updateTimer() {
 
 
 document.getElementById("playBtn").addEventListener("click", function() {
-    if (start == true) {
-        document.getElementById("msg").textContent = "Hi, " + playerName + "! Guess the number!" + ".";
-    }
-    else {
-        document.getElementById("msg").textContent = "Guess another one, " + playerName + "!";
-    }
 
-    start = false;
 
     document.getElementById("playBtn").disabled = true;
     document.getElementById("guessBtn").disabled = false;
@@ -70,6 +64,9 @@ document.getElementById("playBtn").addEventListener("click", function() {
     difficulty = document.querySelector('input[name="level"]:checked').value;
     range = parseInt(difficulty);
     answer = Math.floor(Math.random() * range) + 1;
+
+    document.getElementById("msg").textContent = "Okay, " + playerName + ", guess the number between 1 and " + range + "!";
+
     console.log("Answer (for debugging): " + answer);
 
     startTime = new Date().getTime();
@@ -81,8 +78,15 @@ document.getElementById("playBtn").addEventListener("click", function() {
 })
 
 document.getElementById("guessBtn").addEventListener("click", function() {
-    numberOfGuesses++;
     var guess = parseInt(document.getElementById("guess").value);
+    if (isNaN(guess) == false) {
+    numberOfGuesses++;
+    }
+
+    else if (isNaN(guess)) {
+    document.getElementById("msg").textContent = "Please enter a valid number.";
+    return;
+    }
 
     if ((Math.abs(guess - answer)) > 5)  {
         temp = tempArray[0];
@@ -96,10 +100,6 @@ document.getElementById("guessBtn").addEventListener("click", function() {
         temp = tempArray[2];
     }
 
-    if (isNaN(guess)) {
-        document.getElementById("msg").textContent = "Please enter a valid number.";
-        return;
-    }
     if (guess < answer) {
         document.getElementById("msg").textContent = "Too low, " + playerName + "! Your guess is " + temp + ".";
     }
@@ -107,7 +107,6 @@ document.getElementById("guessBtn").addEventListener("click", function() {
         document.getElementById("msg").textContent = "Too high, " + playerName + "! Your guess is " + temp + ".";
     }
     else if (guess === answer) {
-        document.getElementById("msg").textContent = "That's correct! Congratulations, " + playerName + "!";
         score = numberOfGuesses;
         wins++;
         scoreArray.push(score);
@@ -123,6 +122,7 @@ document.getElementById("guessBtn").addEventListener("click", function() {
         document.getElementById("giveUpBtn").disabled = true;
         document.getElementById("avgScore").textContent = "Average Score: " + avgScore.toFixed(2);
         clearInterval(intervalId);
+        document.getElementById("msg").innerHTML = "That's correct! Congratulations, " + playerName + "! Try to beat your high score of <span class=\"high-score\">" + sorted[0] + "</span> next time!";
         running = false;
         elapsedTime = (new Date().getTime() - startTime) / 1000;
         times.push(elapsedTime);
@@ -145,9 +145,9 @@ document.getElementById("giveUpBtn").addEventListener("click", function() {
     leaderboardArray.push(score);
 
     sorted = leaderboardArray.sort((a, b) => a - b);
-    document.getElementById("leader1").textContent = sorted[0] || 100;
-    document.getElementById("leader2").textContent = sorted[1] || 100;
-    document.getElementById("leader3").textContent = sorted[2] || 100;
+    document.getElementById("leader1").textContent = sorted[0] + "🥇" || 100;
+    document.getElementById("leader2").textContent = sorted[1] + "🥈" || 100;
+    document.getElementById("leader3").textContent = sorted[2] + "🥉" || 100;
 
     let avgScore = scoreArray.reduce((a, b) => a + b, 0) / scoreArray.length;
     document.getElementById("avgScore").textContent = "Average Score: " + avgScore.toFixed(2);
