@@ -100,7 +100,16 @@ document.getElementById("guessBtn").addEventListener("click", function() {
     if (isNaN(guess) == false) {
     numberOfGuesses++;
     }
+    else if (document.getElementById("guess").value.trim() === "") {
+        document.getElementById("msg").textContent = "Please enter a valid number.";
+        return;
+    }
 
+    else if (guess < 1 || guess > range) {
+        document.getElementById("msg").textContent = "Please enter a number between 1 and " + range + ".";
+        return;
+    }
+    
     else if (isNaN(guess)) {
     document.getElementById("msg").textContent = "Please enter a valid number.";
     return;
