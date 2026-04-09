@@ -14,7 +14,22 @@ function updateDateTime() {
     month = monthName[nowForDate.getMonth()];
     dayInMonth = dayInMonthWithSuffix[nowForDate.getDate() - 1];
     year = nowForDate.getFullYear();
-    oclock = nowForDate.getHours() + ":" + nowForDate.getMinutes() + ":" + nowForDate.getSeconds();
+    let hours = nowForDate.getHours();
+    let minutes = nowForDate.getMinutes();
+    let seconds = nowForDate.getSeconds();
+    oclock = hours + ":" + minutes + ":" + seconds;
+    if (hours < 10) {
+        hours = "0" + hours;
+    }
+
+    if (minutes < 10) {
+        minutes = "0" + minutes;
+    }
+
+    if (seconds < 10) {
+        seconds = "0" + seconds;
+    }
+    oclock = hours + ":" + minutes + ":" + seconds;
     document.getElementById("date").textContent = dayName + ", " + month + " " + dayInMonth + ", " + year + " " + oclock;
 }
 
