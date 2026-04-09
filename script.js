@@ -140,6 +140,7 @@ document.getElementById("giveUpBtn").addEventListener("click", function() {
     document.getElementById("giveUpBtn").disabled = true;
     
     score = range;
+    wins++;
     scoreArray.push(score);
     leaderboardArray.push(score);
 
@@ -150,6 +151,7 @@ document.getElementById("giveUpBtn").addEventListener("click", function() {
 
     let avgScore = scoreArray.reduce((a, b) => a + b, 0) / scoreArray.length;
     document.getElementById("avgScore").textContent = "Average Score: " + avgScore.toFixed(2);
+    document.getElementById("wins").textContent = "Total Wins: " + wins;
     // Stop the timer
     clearInterval(intervalId);
     running = false;
