@@ -53,12 +53,14 @@ document.getElementById("playBtn").addEventListener("click", function() {
     difficulty = document.querySelector('input[name="level"]:checked').value;
     range = parseInt(difficulty);
     answer = Math.floor(Math.random() * range) + 1;
+    console.log("Answer (for debugging): " + answer);
 
     startTime = new Date().getTime();
     elapsedTime = 0;
     document.getElementById("fastest").textContent = "Fastest Game: 0.00 seconds";
     running = true;
     intervalId = setInterval(updateTimer, 10);
+    document.getElementById("guess").value = "null";
 })
 
 document.getElementById("guessBtn").addEventListener("click", function() {
@@ -94,6 +96,7 @@ document.getElementById("guessBtn").addEventListener("click", function() {
         scoreArray.push(score);
         leaderboardArray.push(score);
         let sorted = leaderboardArray.sort((a, b) => a - b);
+        let avgScore = scoreArray.reduce((a, b) => a + b, 0) / scoreArray.length;
         document.getElementById("leader1").textContent = sorted[0] || 100;
         document.getElementById("leader2").textContent = sorted[1] || 100;
         document.getElementById("leader3").textContent = sorted[2] || 100;
@@ -101,7 +104,7 @@ document.getElementById("guessBtn").addEventListener("click", function() {
         document.getElementById("playBtn").disabled = false;
         document.getElementById("guessBtn").disabled = true;
         document.getElementById("giveUpBtn").disabled = true;
-        document.getElementById("avgScore").textContent = "Average Guesses: " + avg.toFixed(2);
+        document.getElementById("avgScore").textContent = "Average Score: " + avgScore.toFixed(2);
         clearInterval(intervalId);
         running = false;
         elapsedTime = (new Date().getTime() - startTime) / 1000;
@@ -120,8 +123,8 @@ document.getElementById("giveUpBtn").addEventListener("click", function() {
     document.getElementById("giveUpBtn").disabled = true;
     score += range;
     scoreArray.push(score);
-    avg = scoreArray.reduce((a, b) => a + b, 0) / scoreArray.length;
-    document.getElementById("avgScore").textContent = "Average Guesses: " + avg.toFixed(2);
+    let avgScore = scoreArray.reduce((a, b) => a + b, 0) / scoreArray.length;
+    document.getElementById("avgScore").textContent = "Average Score: " + avgScore.toFixed(2);
     // Stop the timer
     clearInterval(intervalId);
     running = false;
