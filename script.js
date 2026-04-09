@@ -121,8 +121,15 @@ document.getElementById("giveUpBtn").addEventListener("click", function() {
     document.getElementById("guessBtn").disabled = true;
     document.getElementById("playBtn").disabled = false;
     document.getElementById("giveUpBtn").disabled = true;
+    
     score = range;
     scoreArray.push(score);
+
+    sorted = leaderboardArray.sort((a, b) => a - b);
+    document.getElementById("leader1").textContent = sorted[0] || 100;
+    document.getElementById("leader2").textContent = sorted[1] || 100;
+    document.getElementById("leader3").textContent = sorted[2] || 100;
+
     let avgScore = scoreArray.reduce((a, b) => a + b, 0) / scoreArray.length;
     document.getElementById("avgScore").textContent = "Average Score: " + avgScore.toFixed(2);
     // Stop the timer
