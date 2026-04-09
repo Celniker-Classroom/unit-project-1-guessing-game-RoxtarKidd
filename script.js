@@ -2,16 +2,17 @@ let nowForDate = new Date();
 let day = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 let monthName = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 let dayName = day[nowForDate.getDay()];
+let dayInMonthWithSuffix = ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th", "12th", "13th", "14th", "15th", "16th", "17th", "18th", "19th", "20th", "21st", "22nd", "23rd", "24th", "25th", "26th", "27th", "28th", "29th", "30th", "31st"];
 let month = monthName[nowForDate.getMonth()];
-let dayInMonth = nowForDate.getDate()
-let year = nowForDate.getFullYear()
+let dayInMonth = dayInMonthWithSuffix[nowForDate.getDate() - 1];
+let year = nowForDate.getFullYear();
 let oclock = nowForDate.getHours() + ":" + nowForDate.getMinutes() + ":" + nowForDate.getSeconds();
 
 function updateDateTime() {
     nowForDate = new Date();
     dayName = day[nowForDate.getDay()];
     month = monthName[nowForDate.getMonth()];
-    dayInMonth = nowForDate.getDate();
+    dayInMonth = dayInMonthWithSuffix[nowForDate.getDate() - 1];
     year = nowForDate.getFullYear();
     oclock = nowForDate.getHours() + ":" + nowForDate.getMinutes() + ":" + nowForDate.getSeconds();
     document.getElementById("date").textContent = dayName + ", " + month + " " + dayInMonth + ", " + year + " " + oclock;
