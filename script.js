@@ -23,7 +23,10 @@ setInterval(updateDateTime, 1000);
 
 var playerName = prompt("What is your name?");
 playerName = playerName.charAt(0).toUpperCase() + playerName.slice(1).toLowerCase();
-document.getElementById("msg").textContent = "Welcome, " + playerName + "! Please select a difficulty level and click 'Play' to start the game.";
+function formatPlayerName(playerName) {
+    return '<span class="high-score">' + playerName + '</span>';
+}
+document.getElementById("msg").innerHTML = "Welcome, " + formatPlayerName(playerName) + "! Please select a difficulty level and click 'Play' to start the game.";
 var difficulty = null;
 var range = null;
 var answer = null;
@@ -65,7 +68,7 @@ document.getElementById("playBtn").addEventListener("click", function() {
     range = parseInt(difficulty);
     answer = Math.floor(Math.random() * range) + 1;
 
-    document.getElementById("msg").textContent = "Okay, " + playerName + ", guess the number between 1 and " + range + "!";
+    document.getElementById("msg").innerHTML = "Okay, " + formatPlayerName(playerName) + ", guess the number between 1 and " + range + "!";
 
     console.log("Answer (for debugging): " + answer);
 
@@ -101,10 +104,10 @@ document.getElementById("guessBtn").addEventListener("click", function() {
     }
 
     if (guess < answer) {
-        document.getElementById("msg").textContent = "Too low, " + playerName + "! Your guess is " + temp + ".";
+        document.getElementById("msg").innerHTML = "Too low, " + formatPlayerName(playerName) + "! Your guess is " + temp + ".";
     }
     else if (guess > answer) {
-        document.getElementById("msg").textContent = "Too high, " + playerName + "! Your guess is " + temp + ".";
+        document.getElementById("msg").innerHTML = "Too high, " + formatPlayerName(playerName) + "! Your guess is " + temp + ".";
     }
     else if (guess === answer) {
         score = numberOfGuesses;
@@ -122,7 +125,7 @@ document.getElementById("guessBtn").addEventListener("click", function() {
         document.getElementById("giveUpBtn").disabled = true;
         document.getElementById("avgScore").textContent = "Average Score: " + avgScore.toFixed(2);
         clearInterval(intervalId);
-        document.getElementById("msg").innerHTML = "That's correct! Congratulations, " + playerName + "! Try to beat your high score of <span class=\"high-score\">" + sorted[0] + "</span> next time!";
+        document.getElementById("msg").innerHTML = "That's correct! Congratulations, " + formatPlayerName(playerName) + "! Try to beat your high score of " + formatPlayerName(sorted[0]) + " next time!";
         running = false;
         elapsedTime = (new Date().getTime() - startTime) / 1000;
         times.push(elapsedTime);
@@ -145,9 +148,9 @@ document.getElementById("giveUpBtn").addEventListener("click", function() {
     leaderboardArray.push(score);
 
     sorted = leaderboardArray.sort((a, b) => a - b);
-    document.getElementById("leader1").textContent = sorted[0] + "🥇" || 100;
-    document.getElementById("leader2").textContent = sorted[1] + "🥈" || 100;
-    document.getElementById("leader3").textContent = sorted[2] + "🥉" || 100;
+    document.getElementById("leader1").textContent = sorted[0] || 100;
+    document.getElementById("leader2").textContent = sorted[1] || 100;
+    document.getElementById("leader3").textContent = sorted[2] || 100;
 
     let avgScore = scoreArray.reduce((a, b) => a + b, 0) / scoreArray.length;
     document.getElementById("avgScore").textContent = "Average Score: " + avgScore.toFixed(2);
