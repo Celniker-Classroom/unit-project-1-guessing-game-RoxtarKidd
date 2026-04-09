@@ -121,7 +121,7 @@ document.getElementById("giveUpBtn").addEventListener("click", function() {
     document.getElementById("guessBtn").disabled = true;
     document.getElementById("playBtn").disabled = false;
     document.getElementById("giveUpBtn").disabled = true;
-    score += range;
+    score = range;
     scoreArray.push(score);
     let avgScore = scoreArray.reduce((a, b) => a + b, 0) / scoreArray.length;
     document.getElementById("avgScore").textContent = "Average Score: " + avgScore.toFixed(2);
