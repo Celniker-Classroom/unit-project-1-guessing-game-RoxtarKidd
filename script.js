@@ -97,20 +97,20 @@ document.getElementById("playBtn").addEventListener("click", function() {
 
 document.getElementById("guessBtn").addEventListener("click", function() {
     var guess = parseInt(document.getElementById("guess").value);
-    if (isNaN(guess) == false) {
+    if (isNaN(guess) == false && guess >= 1 && guess <= range && document.getElementById("guess").value.trim() !== "") {
     numberOfGuesses++;
     }
-    else if (document.getElementById("guess").value.trim() === "") {
+    if (document.getElementById("guess").value.trim() === "") {
         document.getElementById("msg").textContent = "Please enter a valid number.";
         return;
     }
 
-    else if (guess < 1 || guess > range) {
+    if (guess < 1 || guess > range) {
         document.getElementById("msg").textContent = "Please enter a number between 1 and " + range + ".";
         return;
     }
-    
-    else if (isNaN(guess)) {
+
+    if (isNaN(guess)) {
     document.getElementById("msg").textContent = "Please enter a valid number.";
     return;
     }
