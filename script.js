@@ -1,3 +1,24 @@
+let nowForDate = new Date();
+let day = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+let monthName = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+let dayName = day[nowForDate.getDay()];
+let month = monthName[nowForDate.getMonth()];
+let dayInMonth = nowForDate.getDate()
+let year = nowForDate.getFullYear()
+let oclock = nowForDate.getHours() + ":" + nowForDate.getMinutes() + ":" + nowForDate.getSeconds();
+
+function updateDateTime() {
+    nowForDate = new Date();
+    dayName = day[nowForDate.getDay()];
+    month = monthName[nowForDate.getMonth()];
+    dayInMonth = nowForDate.getDate();
+    year = nowForDate.getFullYear();
+    oclock = nowForDate.getHours() + ":" + nowForDate.getMinutes() + ":" + nowForDate.getSeconds();
+    document.getElementById("date").textContent = dayName + ", " + month + " " + dayInMonth + ", " + year + " " + oclock;
+}
+
+setInterval(updateDateTime, 1000);
+
 var playerName = prompt("What is your name?");
 playerName = playerName.charAt(0).toUpperCase() + playerName.slice(1).toLowerCase();
 var difficulty = null;
@@ -14,19 +35,13 @@ let running = false;
 let startTime = 0;
 let intervalId = null;
 let now = new Date();
-let day = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-let monthName = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-let dayName = day[now.getDay()];
-let month = monthName[now.getMonth()];
-let dayInMonth = now.getDate()
-let year = now.getFullYear()
-let oclock = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+
 let elapsedTime = 0;
 var leaderboardArray = [];
 var times = [];
 start = true;
 
-document.getElementById("date").textContent = "Today is " + dayName + ", " + month + " " + dayInMonth + ", " + year + ". The time is " + oclock + ".";
+
 
 function updateTimer() {
     now = new Date().getTime();
@@ -60,7 +75,7 @@ document.getElementById("playBtn").addEventListener("click", function() {
     document.getElementById("fastest").textContent = "Fastest Game: 0.00 seconds";
     running = true;
     intervalId = setInterval(updateTimer, 10);
-    document.getElementById("guess").value = "null";
+    document.getElementById("guess").value = "";
 })
 
 document.getElementById("guessBtn").addEventListener("click", function() {
