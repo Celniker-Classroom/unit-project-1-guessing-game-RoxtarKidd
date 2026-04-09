@@ -1,1 +1,148 @@
+html, body {
+  min-height: 100%;
+}
 
+body {
+  margin: 0;
+  padding: 24px;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #10203a;
+  background: radial-gradient(circle at top left, #d7ecff 0%, transparent 30%),
+              linear-gradient(180deg, #c4eaff 0%, #6ea6ff 45%, #194a8d 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.18), transparent 38%);
+  pointer-events: none;
+}
+
+.game-card {
+  width: min(100%, 600px);
+  padding: 36px;
+  border-radius: 32px;
+  background: rgba(255, 244, 203, 0.94);
+  border: 5px solid rgb(255, 210, 97);
+  box-shadow: 0 28px 64px rgba(9, 36, 85, 0.2), 0 0 0 1px rgba(255, 239, 176, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.game-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 206, 89, 0.9), rgba(255, 156, 34, 0.5));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+#date {
+  margin: 0 0 18px;
+  font-size: 0.95rem;
+  opacity: 0.85;
+}
+
+h3 {
+  margin-top: 0;
+  margin-bottom: 14px;
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+}
+
+input[type='radio'] {
+  accent-color: #1f68d1;
+}
+
+button,
+input[type='text'] {
+  font: inherit;
+}
+
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: 999px;
+  padding: 14px 22px;
+  color: #10203a;
+  background: linear-gradient(180deg, #ffd556 0%, #ffbc00 100%);
+  box-shadow: 0 12px 24px rgba(31, 25, 10, 0.16);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 30px rgba(31, 25, 10, 0.22);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+#guess {
+  width: 100%;
+  max-width: 220px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(17, 39, 77, 0.16);
+  background: rgba(255, 255, 255, 0.92);
+  color: #10203a;
+}
+
+#guess:focus {
+  outline: 3px solid rgba(29, 101, 197, 0.25);
+  outline-offset: 2px;
+}
+
+.stats,
+.leaderboard {
+  margin-top: 26px;
+}
+
+.stats p,
+.leaderboard ol,
+.leaderboard li {
+  margin: 8px 0;
+}
+
+ol {
+  padding-left: 20px;
+}
+
+li {
+  padding: 10px 14px;
+  border-radius: 16px;
+  margin: 6px 0;
+  background: rgba(255, 255, 255, 0.82);
+}
+
+@media (max-width: 520px) {
+  body {
+    padding: 16px;
+  }
+
+  .game-card {
+    padding: 24px;
+  }
+
+  button {
+    width: 100%;
+  }
+}
