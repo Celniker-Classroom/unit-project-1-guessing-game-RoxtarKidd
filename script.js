@@ -116,7 +116,7 @@ document.getElementById("guessBtn").addEventListener("click", function() {
     }
 
     if (document.getElementById("guess").value.trim() === "") {
-        document.getElementById("msg").textContent = "Please enter a valid number.";
+        document.getElementById("msg").textContent = "Please enter a valid number between 1 and " + range + ".";
         document.getElementById("guess").value = "";
         return;
     }
@@ -128,7 +128,7 @@ document.getElementById("guessBtn").addEventListener("click", function() {
     }
 
     if (isNaN(guess)) {
-    document.getElementById("msg").textContent = "Please enter a valid number.";
+    document.getElementById("msg").textContent = "Please enter a valid number between 1 and " + range + ".";
     document.getElementById("guess").value = "";
     return;
     }
