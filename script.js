@@ -147,9 +147,11 @@ document.getElementById("guessBtn").addEventListener("click", function() {
 
     if (guess < answer) {
         document.getElementById("msg").innerHTML = "Too low, " + formatPlayerName(playerName) + "! Your guess is " + temp + ".";
+        document.getElementById("guess").value = "";
     }
     else if (guess > answer) {
         document.getElementById("msg").innerHTML = "Too high, " + formatPlayerName(playerName) + "! Your guess is " + temp + ".";
+        document.getElementById("guess").value = "";
     }
     else if (guess === answer) {
         score = numberOfGuesses;
