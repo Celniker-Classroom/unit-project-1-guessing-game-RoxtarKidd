@@ -69,11 +69,11 @@ function updateTimer() {
     elapsedTime = (now - startTime) / 1000;  // convert ms to seconds
 }
 
+function startGame() {
+    const playBtn = document.getElementById("playBtn");
+    if (playBtn.disabled) return;
 
-document.getElementById("playBtn").addEventListener("click", function() {
-
-
-    document.getElementById("playBtn").disabled = true;
+    playBtn.disabled = true;
     document.getElementById("guessBtn").disabled = false;
     document.getElementById("giveUpBtn").disabled = false;
     numberOfGuesses = 0;
@@ -93,25 +93,43 @@ document.getElementById("playBtn").addEventListener("click", function() {
     running = true;
     intervalId = setInterval(updateTimer, 10);
     document.getElementById("guess").value = "";
-})
+}
+
+document.getElementById("playBtn").addEventListener("click", startGame);
+
+const guessInput = document.getElementById("guess");
+const guessBtn = document.getElementById("guessBtn");
+
+guessInput.addEventListener("keydown", function(event) {
+    if (event.key === "Enter" && !guessBtn.disabled) {
+        event.preventDefault();
+        guessBtn.classList.add("pressed");
+        setTimeout(() => guessBtn.classList.remove("pressed"), 100);
+        guessBtn.click();
+    }
+});
 
 document.getElementById("guessBtn").addEventListener("click", function() {
     var guess = parseInt(document.getElementById("guess").value);
     if (isNaN(guess) == false && guess >= 1 && guess <= range && document.getElementById("guess").value.trim() !== "") {
     numberOfGuesses++;
     }
+
     if (document.getElementById("guess").value.trim() === "") {
         document.getElementById("msg").textContent = "Please enter a valid number.";
+        document.getElementById("guess").value = "";
         return;
     }
 
     if (guess < 1 || guess > range) {
         document.getElementById("msg").textContent = "Please enter a number between 1 and " + range + ".";
+        document.getElementById("guess").value = "";
         return;
     }
 
     if (isNaN(guess)) {
     document.getElementById("msg").textContent = "Please enter a valid number.";
+    document.getElementById("guess").value = "";
     return;
     }
 
